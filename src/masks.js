@@ -415,8 +415,13 @@
 					decimals = 2;
 				}
 				var decimalsPattern = decimals > 0 ? decimalDelimiter + new Array(decimals + 1).join('0') : '';
-				var moneyMask = new StringMask(currencySym+' #'+thousandsDelimiter+'##0'+decimalsPattern, {reverse: true});
-
+				var includeCurrencySym = (attrs.includeCurrencySym == undefined) || (attrs.includeCurrencySym === "true");
+				var mask = '';
+				if(includeCurrencySym) {
+					mask += currencySym;
+				}
+				mask += ' #'+thousandsDelimiter+'##0'+decimalsPattern;
+				var moneyMask = new StringMask(mask, {reverse: true});
 				ctrl.$formatters.push(function(value) {
 					if(!value) {
 						return value;
