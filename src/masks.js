@@ -427,7 +427,7 @@
 						return value;
 					}
 
-					return moneyMask.apply(value.toFixed(decimals).replace(/[^\d]+/g,''));
+					return moneyMask.apply(parseFloat(value).toFixed(decimals).replace(/[^\d]+/g,''));
 				});
 
 				ctrl.$parsers.push(function(value) {
