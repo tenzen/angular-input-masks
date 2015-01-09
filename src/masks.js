@@ -104,6 +104,17 @@
 		return clearDelimitersAndLeadingZeros((parseFloat(value)).toFixed(decimals));
 	}
 
+	var cepPattern = new StringMask('00000-000');
+	var validateCEP = function(cep) {
+		return cep.length === 8;
+	}
+
+	var btDatePattern = new StringMask('00/00/0000');
+	var validateBrDate = function(value) {
+		var value =  value.split("/");
+		return moment(value[2]+'-'+value[1]+"-"+value[0]).isValid();
+	}
+
 	angular.module('ui.utils.masks', [])
 	.directive('uiPercentageMask', ['$locale', function ($locale) {
 		var decimalDelimiter = $locale.NUMBER_FORMATS.DECIMAL_SEP,
@@ -138,13 +149,15 @@
 					return viewMask.apply(valueToFormat) + ' %';
 				});
 
-				ctrl.$parsers.push(function(value) {
+				element.keyup(function() {
+					var value = $(this).val();
+
 					function renderValue(formatedValue) {
 						if (ctrl.$viewValue !== formatedValue) {
-							ctrl.$setViewValue(formatedValue);
-							ctrl.$render();
-						}	
+							element.val(formatedValue);
+						}
 					}
+
 					if(!value) {
 						renderValue(' %');
 						return value;
@@ -166,7 +179,8 @@
 				});
 
 				if(attrs.min){
-					ctrl.$parsers.push(function(value) {
+					element.keyup(function() {
+						var value = $(this).val();
 						return minValidator(ctrl, value, scope.min);
 					});
 
@@ -176,7 +190,8 @@
 				}
 
 				if(attrs.max) {
-					ctrl.$parsers.push(function(value) {
+					element.keyup(function() {
+						var value = $(this).val();
 						return maxValidator(ctrl, value, scope.max);
 					});
 
@@ -219,7 +234,9 @@
 					return viewMask.apply(valueToFormat);
 				});
 
-				ctrl.$parsers.push(function(value) {
+				element.keyup(function() {
+					var value = $(this).val();
+
 					if(!value) {
 						return value;
 					}
@@ -240,15 +257,15 @@
 					}
 
 					if (ctrl.$viewValue !== formatedValue) {
-						ctrl.$setViewValue(formatedValue);
-						ctrl.$render();
+						element.val(formatedValue);
 					}
 
 					return actualNumber;
 				});
 
 				if(attrs.min){
-					ctrl.$parsers.push(function(value) {
+					element.keyup(function() {
+						var value = $(this).val();
 						return minValidator(ctrl, value, scope.min);
 					});
 
@@ -258,7 +275,8 @@
 				}
 
 				if(attrs.max) {
-					ctrl.$parsers.push(function(value) {
+					element.keyup(function() {
+						var value = $(this).val();
 						return maxValidator(ctrl, value, scope.max);
 					});
 
@@ -290,7 +308,8 @@
 					return applyCpfMask(value);
 				});
 
-				ctrl.$parsers.push(function(value) {
+				element.keyup(function() {
+					var value = $(this).val();
 					if(!value) {
 						return value;
 					}
@@ -300,8 +319,7 @@
 					ctrl.$setValidity('cpf', validateCPF(formatedValue));
 
 					if (ctrl.$viewValue !== formatedValue) {
-						ctrl.$setViewValue(formatedValue);
-						ctrl.$render();
+						element.val(formatedValue);
 					}
 
 					return formatedValue.replace(/[^\d]+/g,'');
@@ -329,7 +347,8 @@
 					return applyCnpjMask(value);
 				});
 
-				ctrl.$parsers.push(function(value) {
+				element.keyup(function() {
+					var value = $(this).val();
 					if(!value) {
 						return value;
 					}
@@ -339,8 +358,7 @@
 					ctrl.$setValidity('cnpj', validateCNPJ(formatedValue));
 
 					if (ctrl.$viewValue !== formatedValue) {
-						ctrl.$setViewValue(formatedValue);
-						ctrl.$render();
+						element.val(formatedValue);
 					}
 
 					return formatedValue.replace(/[^\d]+/g,'');
@@ -373,7 +391,8 @@
 					return applyCpfCnpjMask(value);
 				});
 
-				ctrl.$parsers.push(function(value) {
+				element.keyup(function() {
+					var value = $(this).val();
 					if(!value) {
 						return value;
 					}
@@ -389,8 +408,7 @@
 					}
 
 					if (ctrl.$viewValue !== formatedValue) {
-						ctrl.$setViewValue(formatedValue);
-						ctrl.$render();
+						element.val(formatedValue);
 					}
 
 					return formatedValue.replace(/[^\d]+/g,'');
@@ -430,7 +448,9 @@
 					return moneyMask.apply(parseFloat(value).toFixed(decimals).replace(/[^\d]+/g,''));
 				});
 
-				ctrl.$parsers.push(function(value) {
+				element.keyup(function() {
+					var value = $(this).val();
+
 					if (!value) {
 						return value;
 					}
@@ -440,8 +460,7 @@
 					var formatedValue = moneyMask.apply(actualNumber);
 
 					if (value !== formatedValue) {
-						ctrl.$setViewValue(formatedValue);
-						ctrl.$render();
+						element.val(formatedValue);
 					}
 
 					return parseInt(formatedValue.replace(/[^\d]+/g,''))/Math.pow(10,decimals);
@@ -500,7 +519,8 @@
 					return applyPhoneMask(value);
 				});
 
-				ctrl.$parsers.push(function(value) {
+				element.keyup(function() {
+					var value = $(this).val();
 					if (!value) {
 						return value;
 					}
@@ -509,13 +529,95 @@
 					var formatedValue = applyPhoneMask(cleanValue);
 
 					if (ctrl.$viewValue !== formatedValue) {
-						ctrl.$setViewValue(formatedValue);
-						ctrl.$render();
+						element.val(formatedValue);
 					}
 
 					return clearValue(formatedValue);
 				});
 			}
 		}
-	});
+	})
+	.directive('uiCepMask', [function () {
+		function applyCepMask (value) {
+			if(!value) {
+				return value;
+			}
+			var formatedValue = cepPattern.apply(value);
+			return formatedValue.trim().replace(/[^0-9]$/, '');
+		}
+
+		return {
+			restrict: 'A',
+			require: '?ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				if (!ctrl) {
+					return;
+				}
+
+				ctrl.$formatters.push(function(value) {
+					return applyCepMask(value);
+				});
+
+				element.keyup(function() {
+					var value = $(this).val();
+
+					if(!value) {
+						return value;
+					}
+
+					var actualNumber = value.replace(/[^\d]/g,'');
+					var formatedValue = applyCepMask(actualNumber);
+
+					ctrl.$setValidity('cep', validateCEP(actualNumber));
+
+					if (ctrl.$viewValue !== formatedValue) {
+						element.val(formatedValue);
+					}
+
+					return actualNumber;
+				});
+			}
+		}
+	}])
+	.directive('uiBrDateMask', ['$timeout', function ($timeout) {
+		function applyBrDateMask (value) {
+			if(!value) {
+				return value;
+			}
+			var formatedValue = btDatePattern.apply(value);
+			return formatedValue.trim().replace(/[^0-9]$/, '');
+		}
+
+		return {
+			restrict: 'A',
+			require: '?ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				if (!ctrl) {
+					return;
+				}
+
+				ctrl.$formatters.push(function(value) {
+					return applyBrDateMask(value);
+				});
+
+				element.keyup(function() {
+					var value = $(this).val();
+					if(!value) {
+						return value;
+					}
+
+					var actualNumber = value.replace(/[^\d]/g,'');
+					var formatedValue = applyBrDateMask(actualNumber);
+
+					ctrl.$setValidity('brDateMask', validateBrDate(formatedValue));
+
+					if (ctrl.$viewValue !== formatedValue) {
+						element.val(formatedValue);
+					}
+
+					return formatedValue;
+				});
+			}
+		};
+	}])
 })();
