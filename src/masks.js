@@ -172,8 +172,10 @@
 					}
 					renderValue(formatedValue);
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return actualNumber;
 				});
@@ -257,8 +259,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return actualNumber;
 				});
@@ -320,8 +324,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return formatedValue.replace(/[^\d]+/g,'');
 				});
@@ -362,8 +368,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return formatedValue.replace(/[^\d]+/g,'');
 				});
@@ -415,8 +423,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return formatedValue.replace(/[^\d]+/g,'');
 				});
@@ -469,8 +479,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return parseInt(formatedValue.replace(/[^\d]+/g,''))/Math.pow(10,decimals);
 				});
@@ -541,8 +553,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return clearValue(formatedValue);
 				});
@@ -585,8 +599,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return actualNumber;
 				});
@@ -629,8 +645,10 @@
 						ctrl.$render();
 					}
 
-					element.focus();
-					element.val(formatedValue);
+					window.setTimeout(function() {
+						element.val(formatedValue);
+						element.focus();
+					});
 
 					return actualNumber;
 				});
