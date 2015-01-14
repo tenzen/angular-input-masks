@@ -174,7 +174,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return actualNumber;
@@ -261,7 +260,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return actualNumber;
@@ -326,7 +324,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return formatedValue.replace(/[^\d]+/g,'');
@@ -370,7 +367,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return formatedValue.replace(/[^\d]+/g,'');
@@ -425,7 +421,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return formatedValue.replace(/[^\d]+/g,'');
@@ -481,7 +476,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return parseInt(formatedValue.replace(/[^\d]+/g,''))/Math.pow(10,decimals);
@@ -555,7 +549,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return clearValue(formatedValue);
@@ -601,7 +594,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return actualNumber;
@@ -647,7 +639,6 @@
 
 					window.setTimeout(function() {
 						element.val(formatedValue);
-						element.focus();
 					});
 
 					return actualNumber;
