@@ -619,6 +619,9 @@
 				}
 
 				ctrl.$formatters.push(function(value) {
+					if(!value) {
+						return value;
+					}
 					value = value.replace(/[^\d]/g,'');
 					return applyCepMask(value);
 				});
