@@ -114,7 +114,7 @@
 		originalValue = originalValue+"";
 		if(originalValue.length != 8) return false;
 
-		return moment(originalValue.split("/").reverse().join("-")).isValid();
+		return moment(formattedValue.split("/").reverse().join("-")).isValid();
 	}
 
 	angular.module('ui.utils.masks', [])
