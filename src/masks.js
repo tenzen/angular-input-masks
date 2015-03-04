@@ -110,8 +110,11 @@
 	}
 
 	var btDatePattern = new StringMask('00/00/0000');
-	function validateBrDate (value) {
-		return moment(value.split("/").reverse().join("-")).isValid();
+	function validateBrDate (originalValue, formattedValue) {
+		originalValue = originalValue+"";
+		if(originalValue.length != 8) return false;
+
+		return moment(originalValue.split("/").reverse().join("-")).isValid();
 	}
 
 	angular.module('ui.utils.masks', [])
@@ -584,19 +587,19 @@
 
 					var actualNumber = value.replace(/[^\d]/g,'');
 					var formatedValue = applyBrDateMask(actualNumber);
+					var valid = validateBrDate(actualNumber, formatedValue);
 
-					ctrl.$setValidity('brDateMask', validateBrDate(formatedValue));
+					ctrl.$setValidity('brDateMask', valid);
 
 					if (ctrl.$viewValue !== formatedValue) {
 						ctrl.$setViewValue(formatedValue);
 						ctrl.$render();
+						window.setTimeout(function() {
+							element.val(formatedValue);
+						});
 					}
 
-					window.setTimeout(function() {
-						element.val(formatedValue);
-					});
-
-					return actualNumber;
+					return valid? actualNumber : ctrl.$modelValue;
 				});
 			}
 		};
