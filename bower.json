@@ -7,15 +7,11 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "demo"
+    "bower_components"
   ],
+  "main": "dist/angular-input-masks.js",
   "dependencies": {
     "angular": "~1.2.9",
     "string-mask": "~0.0.0"
-  },
-  "devDependencies": {
-    "angular-mocks": "1.2.9"
   }
 }
